@@ -1,0 +1,197 @@
+<style>
+    .req{
+        color: red;
+        font-size: 14px;
+    }
+    .card{
+        border: none;
+        border-top: 3px solid #17a2b8 ;
+    }
+    h4{
+        color: #17a2b8;
+    }
+    img{
+        object-fit: cover;object-position: top;
+    }
+    .view_image{
+        padding: 10px;
+        box-sizing: border-box;
+        border: 4px solid rgb(162, 166, 167) !important
+    }
+</style>
+
+<section class="content ">
+    <div class="container-fluid py-4" id="createMemberSection">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4 class="m-0">Point of Sale  </h4>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <!-- <label for="">Select Customer <span class="req">*</span> </label> -->
+                            <select name="" id="" class="form-control select2bs4" 
+                            name="cost" ng-model="cost" required>
+                                <option value="" selected>Select Customer</option>
+                                <option ng-repeat="customer in members_data" value="{{customer.id}}">
+                                    {{customer.name}} - {{customer.phone}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="addPackageForm.cost.$dirty && ng_cost == 0">
+                            <small class="text-danger"> Please Select Customer! </small>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <form name="addCustomerForm" novalidate enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Name <span class="req">*</span> </label>
+                                <input class="form-control" type="text" placeholder="Name"
+                                 name="mname" ng-model="ng_cname"  required>
+                            </div>
+                            <div ng-show="addCustomerForm.mname.$dirty && addCustomerForm.mname.$invalid">
+                                <!-- <small class="text-danger" ng-show="addCustomerForm.mname.$invalid">
+                                    ( Only characters are allowed )
+                                </small>
+                                <br> -->
+                                <small class="text-danger" ng-show="addCustomerForm.mname.$error.required">
+                                    Required
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Phone<span class="req">*</span> </label>
+                                <input class="form-control"  type="text" placeholder="03053609490" 
+                                 name="cphone" ng-model="ng_cphone" required="required"
+                                  minlength="11" maxlength="11" pattern="^[0-9]*$">
+                            </div>
+                            <div class="form-group" ng-show="addCustomerForm.cphone.$dirty && addCustomerForm.cphone.$invalid">
+                                <small class="text-danger" ng-show="addCustomerForm.cphone.$invalid">
+                                    ( Only number allowed, no character accepted )
+                                </small>
+                                <br>
+                                <small class="text-danger" ng-show="addCustomerForm.cphone.$error.required">
+                                    Required*
+                                </small>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Amount <span class="req">*</span> </label>
+                                <input class="form-control"  type="text" placeholder="2345" 
+                                 name="mamount" ng-model="ng_mamount" required="required"
+                                 maxlength="8" pattern="^[0-9]*$">
+                            </div>
+                            <div class="form-group" ng-show="addMemberForm.mamount.$dirty && addMemberForm.mamount.$invalid">
+                                <small class="text-danger" ng-show="addMemberForm.mamount.$invalid">
+                                    ( Only number allowed, no character accepted )
+                                </small>
+                                <br>
+                                <small class="text-danger" ng-show="addMemberForm.mamount.$error.required">
+                                    Required*
+                                </small>
+                            </div>
+                        </div> -->
+
+                       
+
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Address <span class="req">*</span> </label>
+                                <input class="form-control" type="text" placeholder="Address"
+                                 name="caddress" ng-model="ng_caddress" pattern="" required>
+                            </div>
+                            <div ng-show="addCustomerForm.caddress.$dirty && addCustomerForm.caddress.$invalid">
+                                <!-- <small class="text-danger" ng-show="addCustomerForm.maddress.$invalid">
+                                    ( Only characters are allowed )
+                                </small> -->
+                                <br>
+                                <small class="text-danger" ng-show="addCustomerForm.caddress.$error.required">
+                                    Required
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label for="id_editStaffImg">Upload Image <small>(optional)</small> </label>
+                            <div style="width: 100%; height:auto;"  action="/file-upload" class="dropzone"
+                             id="customer_dropzone"></div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="card-body table-responsive col-md-12">
+                                <table dir="rtl" class="table table-sm  table-bordered table-hover" 
+                                >
+                                <!-- datatable="ng" dt-option="vm.dtOptions" -->
+                                    <thead class="thead-light ">
+                                        <tr class="">
+                                            <th>اکاونٹ نمبر</th>
+                                            <th class="text-center">  پروڈکٹ کا نام </th>
+                                            <th class="text-center">مقدار</th>
+                                            <th class="text-center"> رقم </th>
+                                            <th class="text-center">عمل</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in activeitems">
+                                            <td dir="rtl" class="align-middle text-center">{{ item.id }}</td>
+                                            <td dir="rtl" class="align-middle text-right">
+                                                {{ item.label }}
+                                            </td>
+                                            <td class="align-middle ">
+                                                <input type="text" class="form-control" placeholder="مقدار" ng-model="qty">
+                                            </td>
+                                            <td class="align-middle">
+                                                <input type="text" class="form-control" placeholder="رقم" ng-model="price">
+                                            </td>
+                                            <td class="align-middle">
+                                                <button class="btn btn-xs btn-success"
+                                                 ng-click="add_cart(item.id,item.label,qty,price)">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 mx-auto">
+                                <button class="btn btn-block btn-info btn-md" 
+                                ng-disabled="addMemberForm.$invalid" 
+                                ng-click="createSale(cost)">ADD Sale</button> 
+                            </div>   
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <div class="card-footer text-right">
+                <button class="btn btn-xs btn-dark" ng-click="hideaddMember()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    
+</section>
+
+<script> 
+    $('.select2').select2();
+    $('.select2bs4').select2({
+        theme: 'bootstrap4'
+    });
+ 
+</script>
+    
+</script>

@@ -1,0 +1,694 @@
+<style>
+    .req{
+        color: red;
+        font-size: 14px;
+    }
+    .card{
+        border: none;
+        border-top: 3px solid #17a2b8 ;
+    }
+    h4{
+        color: #17a2b8;
+    }
+    img{
+        object-fit: cover;object-position: top;
+    }
+    .view_image{
+        padding: 10px;
+        box-sizing: border-box;
+        border: 4px solid rgb(162, 166, 167) !important
+    }
+</style>
+<section class="content ">
+    <div class="container-fluid py-4" id="createMemberSection">
+        <div class="card shadow">
+            <div class="card-header">
+                <h4 class="m-0">Add Customer</h4>
+            </div>
+            <form name="addMemberForm" novalidate enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Name <span class="req">*</span> </label>
+                                <input class="form-control" type="text" placeholder="Name"
+                                 name="mname" ng-model="ng_mname"  required>
+                            </div>
+                            <div ng-show="addMemberForm.mname.$dirty && addMemberForm.mname.$invalid">
+                                <!-- <small class="text-danger" ng-show="addMemberForm.mname.$invalid">
+                                    ( Only characters are allowed )
+                                </small>
+                                <br> -->
+                                <small class="text-danger" ng-show="addMemberForm.mname.$error.required">
+                                    Required
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Gender <span class="req">*</span> </label>
+                                <select id="" class="form-control" style="width: 100%;"
+                                name="gender" ng-model="ng_gender" required>
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group" ng-show="addMemberForm.gender.$dirty && ng_gender == 0">
+                                <small class="text-danger"> Please Select Gender! </small>
+                            </div>
+                        </div> -->
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Phone<span class="req">*</span> </label>
+                                <input class="form-control"  type="text" placeholder="03053609490" 
+                                 name="mphone" ng-model="ng_mphone" required="required"
+                                  minlength="11" maxlength="11" pattern="^[0-9]*$">
+                            </div>
+                            <div class="form-group" ng-show="addMemberForm.mphone.$dirty && addMemberForm.mphone.$invalid">
+                                <small class="text-danger" ng-show="addMemberForm.mphone.$invalid">
+                                    ( Only number allowed, no character accepted )
+                                </small>
+                                <br>
+                                <small class="text-danger" ng-show="addMemberForm.mphone.$error.required">
+                                    Required*
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Amount <span class="req">*</span> </label>
+                                <input class="form-control"  type="text" placeholder="2345" 
+                                 name="mamount" ng-model="ng_mamount" required="required"
+                                 maxlength="8" pattern="^[0-9]*$">
+                            </div>
+                            <div class="form-group" ng-show="addMemberForm.mamount.$dirty && addMemberForm.mamount.$invalid">
+                                <small class="text-danger" ng-show="addMemberForm.mamount.$invalid">
+                                    ( Only number allowed, no character accepted )
+                                </small>
+                                <br>
+                                <small class="text-danger" ng-show="addMemberForm.mamount.$error.required">
+                                    Required*
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label for="">CNIC <small>(Optional)</small> </label>
+                                <input class="form-control"  type="text" placeholder="3130440236215" 
+                                 name="mcnic" ng-model="ng_mcnic"
+                                  minlength="13" maxlength="13" pattern="^[0-9]*$">
+                            </div>
+                            <div class="form-group" ng-show="addMemberForm.mcnic.$dirty && addMemberForm.mcnic.$invalid">
+                                <small class="text-danger" ng-show="addMemberForm.mcnic.$invalid">
+                                    ( Only number allowed, no character accepted )
+                                </small>
+                                <!-- <br>
+                                <small class="text-danger" ng-show="addMemberForm.mcnic.$error.required">
+                                    Required*
+                                </small> -->
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Address <span class="req">*</span> </label>
+                                <input class="form-control" type="text" placeholder="Address"
+                                 name="maddress" ng-model="ng_maddress" pattern="" required>
+                            </div>
+                            <div ng-show="addMemberForm.maddress.$dirty && addMemberForm.maddress.$invalid">
+                                <!-- <small class="text-danger" ng-show="addMemberForm.maddress.$invalid">
+                                    ( Only characters are allowed )
+                                </small> -->
+                                <br>
+                                <small class="text-danger" ng-show="addMemberForm.maddress.$error.required">
+                                    Required
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <label for="id_editStaffImg">Upload Image <small>(optional)</small> </label>
+                            <div style="width: 100%; height:auto;"  action="/file-upload" class="dropzone"
+                             id="member_dropzone"></div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 mx-auto">
+                                <button class="btn btn-block btn-info btn-md" 
+                                ng-disabled="addMemberForm.$invalid" 
+                                ng-click="createMember()">Create Customer</button> 
+                            </div>   
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <div class="card-footer text-right">
+                <button class="btn btn-xs btn-dark" ng-click="hideaddMember()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-4" id="memberListingSection">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="m-0">Customer Listing</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-sm btn-dark" ng-click="showCreateMemberSection()">
+                            <i class="far fa-plus-square"></i> Add Customer
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-body table-responsive col-md-12">
+                <table id="example1" ng-if="members_data.length" dir="rtl" class="table table-sm  table-borderless table-hover" >
+                 <!-- <caption>صارفین کی فہرست</caption> -->
+                    <thead class="thead-light ">
+                        <tr class="">
+                            <th dir="rtl">اکاونٹ نمبر</th>
+                            <th dir="rtl" class="text-center"> نام</th>
+                            <th dir="rtl" class="text-center">فون نمبر</th>
+                            <th dir="rtl" class="text-center">پتہ</th>
+                            <th dir="rtl" class="text-center">کل رقم </th>
+                            <th dir="rtl" class="text-center">عمل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="member in members_data">
+                            <td dir="rtl" class="align-middle text-center">{{ member.id }}</td>
+                            <td dir="rtl" class="align-middle text-right">
+                                <span class="mr-2" ng-if="member.image !== ''">
+                                    <img ng-src="{{member.image}}" width="45px" height="45px" 
+                                    alt="" class="rounded-circle">
+                                </span>
+                                <span class="mr-2" ng-if="member.image == ''">
+                                    <img src="public/dist/img/avatar5.png" width="45px" height="45px" 
+                                    alt="" class="rounded-circle">
+                                </span>
+                                <span class="mx-2">
+                                    {{ member.name }}
+                                </span>
+
+                            </td>
+                            <td class="align-middle ">{{ member.phone }}</td>
+                            <td class="align-middle">{{member.adress}}</td>
+                            <td class="align-middle">{{member.amount}}</td>
+                            <td class="align-middle">
+                                <button class="btn btn-xs btn-success" ng-click="AddcustomerModal(member)">Add
+                                </button>
+                                <button class="btn btn-xs btn-primary" ng-click="viewMemberModal(member)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <button class="btn btn-xs btn-success" ng-click="updateMemberModal(member)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <!-- <button class="btn btn-xs btn-danger" ng-click="delMember(member.member_id)">
+                                    <i class="fa fa-trash"></i>
+                                </button> -->
+                                <button class="btn btn-xs btn-danger" ng-click="payAmountModel(member)">Pay
+                                    <!-- <i class="fa fa-trash"></i> -->
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Member Edit Modal Starts  -->
+<div class="modal fade" id="modalMemberEdit">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Customer</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="">
+                    <form name="editMemberForm" novalidate enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" ng-model="ng_editmid">
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Name <span class="req">*</span> </label>
+                                        <input class="form-control" type="text" placeholder="Name"
+                                         name="editmname" ng-model="ng_editmname" pattern="^[a-z A-Z]*$" required>
+                                    </div>
+                                    <div ng-show="editMemberForm.editmname.$dirty && editMemberForm.editmname.$invalid">
+                                        <small class="text-danger" ng-show="editMemberForm.editmname.$invalid">
+                                            ( Only characters are allowed )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="editMemberForm.editmname.$error.required">
+                                            Required
+                                        </small>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Gender <span class="req">*</span> </label>
+                                        <select id="" class="form-control" style="width: 100%;"
+                                        name="editgender" ng-model="ng_editmgender" required>
+                                            <option value="" selected>Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-show="editMemberForm.editgender.$dirty && ng_editmgender == 0">
+                                        <small class="text-danger"> Please Select Gender! </small>
+                                    </div>
+                                </div> -->
+        
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Phone <span class="req">*</span> </label>
+                                        <input class="form-control"  type="text" placeholder="03053609490" 
+                                         name="editmphone" ng-model="ng_editmphone" required="required"
+                                          minlength="11" maxlength="11" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="editMemberForm.editmphone.$dirty && editMemberForm.editmphone.$invalid">
+                                        <small class="text-danger" ng-show="editMemberForm.editmphone.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="editMemberForm.editmphone.$error.required">
+                                            Required*
+                                        </small>
+                                    </div>
+                                </div>
+    
+        
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">CNIC <small>(Optional)</small> </label>
+                                        <input class="form-control"  type="text" placeholder="3130440236215" 
+                                         name="editmcnic" ng-model="ng_editmcnic"
+                                          minlength="13" maxlength="13" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="editMemberForm.editmcnic.$dirty && editMemberForm.editmcnic.$invalid">
+                                        <small class="text-danger" ng-show="editMemberForm.editmcnic.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <!-- <br>
+                                        <small class="text-danger" ng-show="editMemberForm.editmcnic.$error.required">
+                                            Required*
+                                        </small> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Address <span class="req">*</span> </label>
+                                        <input class="form-control" type="text" placeholder="Address"
+                                         name="editmaddress" ng-model="ng_editmaddress" pattern="^[a-z A-Z]*$" required>
+                                    </div>
+                                    <div ng-show="addMemberForm.editmaddress.$dirty && addMemberForm.editmaddress.$invalid">
+                                        <small class="text-danger" ng-show="addMemberForm.editmaddress.$invalid">
+                                            ( Only characters are allowed )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="addMemberForm.editmaddress.$error.required">
+                                            Required
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Amount <span class="req">*</span> </label>
+                                        <input class="form-control"  type="text" placeholder="2345" 
+                                         name="editmamount" ng-model="ng_editmamount" required="required"
+                                         maxlength="8" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="addMemberForm.editmamount.$dirty && addMemberForm.editmamount.$invalid">
+                                        <small class="text-danger" ng-show="addMemberForm.editmamount.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="addMemberForm.editmamount.$error.required">
+                                            Required*
+                                        </small>
+                                    </div>
+                                </div>
+        
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label for="id_editStaffImg">Upload Image <small>(optional)</small> </label>
+                                    <div style="width: 100%; height:auto;"  action="/file-upload" class="dropzone"
+                                     id="editmember_dropzone"></div>
+                                </div>
+        
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 mx-auto">
+                                        <button class="btn btn-block btn-info btn-md" 
+                                        ng-disabled="editMemberForm.$invalid" 
+                                        ng-click="updateMember()">Update Customer</button> 
+                                    </div>   
+                                </div>
+        
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- Member Edit Modal Ends  -->
+
+
+<!-- Member View Modal Starts  -->
+<div class="modal fade" id="modalMemberView">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">View Customer</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3 text-center" ng-if="view_mimage !== ''">
+                        <img ng-src="{{view_mimage}}" alt="" class=" rounded-circle view_image" width="150px" height="150px">
+                    </div>
+                    <div class="col-md-3 text-center" ng-if="view_mimage == ''">
+                        <img src="public/dist/img/avatar5.png" alt="" class="rounded-circle view_image" width="150px" height="150px">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row py-2 bg-light">
+                            <div class="col-md-4">
+                                <h5>Name:</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{view_mname}}</h5>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <h5>Phone:</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{view_mphone}}</h5>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <h5>Address:</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{view_maddress}}</h5>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-4">
+                                <h5>Remaining Amount:</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{view_mamount}}</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body table-responsive col-md-12">
+                    <table class="table table-sm  table-borderless table-hover" 
+                     datatable="ng" dt-option="vm.dtOptions">
+                     <caption>List of Customers</caption>
+                        <thead class="thead-light">
+                            <tr class="">
+                                <th>Date</th>
+                                <!-- <th>sale_id</th> -->
+                                <th>New Amount</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="customer in customer_details">
+                                <td class="align-middle">{{ customer.created_on }}</td>
+                                <!-- <td class="align-middle">{{ customer.id }}</td> -->
+                                <td class="align-middle">{{customer.new_amount}}</td>
+                                <td><button class="btn btn-outline-info btn-xs" ng-click="saleDetail(customer.id,customer.new_amount)"
+                                    >Detail</button></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- Member View Modal Ends  -->
+
+<!-- sale View Modal Starts  -->
+<div class="modal fade" id="modalSaleView">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Sale History</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="card-body table-responsive col-md-12">
+                    <table class="table table-sm  table-borderless table-hover" >
+                        <!-- datatable="ng" dt-option="vm.dtOptions" -->
+                     <caption>List of Sale</caption>
+                        <thead class="thead-light">
+                            <tr class="">
+                                <th>تاریخ</th>
+                                <th class="">  پروڈکٹ کا نام </th>
+                                <th class="">مقدار</th>
+                                <th class=""> رقم </th>
+                              
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="sale in sale_detail">
+                                <td class="align-middle">{{sale.created_on}}</td>
+                                <td class="align-middle ">{{ sale.label }}</td>
+                                <td class="align-middle">
+                                    <span ng-if="sale.quantity==''">0</span>
+                                    {{ sale.quantity }}
+                                </td>
+                                
+                                <td class="align-middle">{{sale.price}}</td>
+                                
+                            </tr>
+                            <tr class="bg-info text-white">
+                                <td colspan="2"></td>
+                                <td>
+                                  Total Amount
+                                </td>
+                                <td>{{saletotal}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- sale View Modal Ends  -->
+
+<!--Pay Amount Modal Starts  -->
+<div class="modal fade" id="modalpayAmount">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Pay Amount </h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="">
+                    <form name="payAmountform" novalidate enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" ng-model="ng_cid">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Total Amount <span class="req">*</span> </label>
+                                        <input class="form-control"  type="text" placeholder="2345" 
+                                         name="ctotalmamount" ng-model="ng_ctotalmamount" readonly
+                                         maxlength="8" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="payAmountform.ctotalmamount.$dirty && payAmountform.ctotalmamount.$invalid">
+                                        <small class="text-danger" ng-show="payAmountform.ctotalmamount.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="payAmountform.ctotalmamount.$error.required">
+                                            Required*
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Pay Amount <span class="req">*</span> </label>
+                                        <input class="form-control"  type="text" placeholder="xxxx" 
+                                         name="cmamount" ng-model="ng_cmamount" required="required"
+                                         maxlength="8" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="payAmountform.cmamount.$dirty && payAmountform.cmamount.$invalid">
+                                        <small class="text-danger" ng-show="payAmountform.cmamount.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="payAmountform.cmamount.$error.required">
+                                            Required*
+                                        </small>
+                                    </div>
+                                </div
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                       <span class="text-danger" ng-if="ng_cmamount > ng_ctotalmamount">
+                                           Paid amount must be less than or equal to Total amount.
+                                       </span>
+                                </div>
+
+        
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                                    
+                                        <button class="btn btn-block btn-info btn-md" 
+                                        ng-disabled="payAmountform.$invalid || ng_cmamount > ng_ctotalmamount" 
+                                        ng-click="payAmount()">Pay Amount</button> 
+                                      
+                                </div>
+        
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!--Pay Amount Modal Ends  -->
+
+<!--Pay Amount Modal Starts  -->
+<div class="modal fade" id="modaladdcustomer">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">New Sale</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="">
+                    <form name="addcustomerdataform" novalidate enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" ng-model="ng_cidd">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Amount <span class="req">*</span> </label>
+                                        <input class="form-control"  type="text" placeholder="2345" 
+                                         name="ctotalmamount" ng-model="ng_cmamount" required="required"
+                                         maxlength="8" pattern="^[0-9]*$">
+                                    </div>
+                                    <div class="form-group" ng-show="addcustomerdataform.ctotalmamount.$dirty && addcustomerdataform.ctotalmamount.$invalid">
+                                        <small class="text-danger" ng-show="addcustomerdataform.ctotalmamount.$invalid">
+                                            ( Only number allowed, no character accepted )
+                                        </small>
+                                        <br>
+                                        <small class="text-danger" ng-show="addcustomerdataform.ctotalmamount.$error.required">
+                                            Required*
+                                        </small>
+                                    </div>
+                                </div>        
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                                    
+                                        <button class="btn btn-block btn-info btn-md" 
+                                        ng-disabled="addcustomerdataform.$invalid" 
+                                        ng-click="Addcustomerdata()">Add Sale</button> 
+                                      
+                                </div>
+        
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!--Pay Amount Modal Ends  -->
+<script> 
+    $('.select2').select2();
+</script>
+
+<script>
+
+    function abc(){
+        setTimeout(function(){
+            $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,"ordering": false,
+            "buttons": ["print"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        }, 2000);
+    }
+
+    abc();
+
+    $(function () {
+        console.log('datables create');
+       
+
+    
+    console.log('datatble mounted');
+    
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+    //   "info": true,
+      "autoWidth": false,
+      "responsive": true,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+  });
+
+</script>
+

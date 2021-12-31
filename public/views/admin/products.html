@@ -1,0 +1,242 @@
+<style>
+    .req{
+        color: red;
+        font-size: 14px;
+    }
+    .card{
+        border: none;
+        border-top: 3px solid #17a2b8 ;
+    }
+    .modal-header{
+        border: none;
+        border-top: 3px solid #17a2b8 ;
+        border-bottom: 1px solid lightgray;
+    }
+    h4{
+        color: #17a2b8;
+    }
+    img{
+        object-fit: cover;object-position: top;
+    }
+    .view_image{
+        padding: 10px;
+        box-sizing: border-box;
+        border: 4px solid rgb(162, 166, 167) !important;
+    }
+</style>
+<section class="content " >
+    <div class="container-fluid py-4" id="createProductSection" dir="rtl">
+        <div class="card shadow">
+            <div class="card-header">
+                <h4 class="m-0">Add Products</h4>
+                
+            </div>
+            <form name="additem" novalidate enctype="multipart/form-data">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 mx-auto col-sm-12">
+                            <div class="form-group">
+                                <p class="text-right
+                                " > پروڈکٹ کا نام <span class="req">*</span> </p>
+                                <input  dir="rtl" class="form-control" type="text" placeholder="پروڈکٹ کا نام شامل کریں۔"
+                                 name="pname" ng-model="ng_pname"  required>
+                            </div>
+                            <div ng-show="additem.pname.$dirty && additem.pname"> 
+                                <!-- <small class="text-danger" ng-show="additem.pname.$invalid">
+                                    ( Only characters are allowed )
+                                </small> -->
+                                <br>
+                                <small class="text-danger" ng-show="additem.pname.$error.required">
+                                    Required
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-12 col-md-12 col-sm-12 mt-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 mx-auto">
+                                <button class="btn btn-block btn-info btn-md" 
+                                ng-disabled="addStaffForm.$invalid " 
+                                ng-click="createProduct()">Create Product</button> 
+                            </div>   
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <div class="card-footer text-right">
+                <button class="btn btn-xs btn-dark" ng-click="hideaddProduct()">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-4" id="productListingSection">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="m-0">Products Listing</h4>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-sm btn-dark" ng-click="showCreateProductSection()">
+                            <i class="far fa-plus-square"></i> Add Products
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body table-responsive col-md-12">
+                <table class="table table-borderless table-hover" 
+                 datatable="ng" dt-option="vm.dtOptions">
+                 <caption>List of Staff</caption>
+                    <thead class="thead-light">
+                        <tr class="">
+                            <th>Sr No.</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="st in items">
+                            <td class="align-middle">{{ $index+1 }}</td>
+                            <td class="align-middle">
+                                <!-- <span class="mr-2" ng-if="st.image !== ''">
+                                    <img ng-src="{{st.image}}" width="45px" height="45px" 
+                                    alt="" class="rounded-circle">
+                                </span> -->
+                                <!-- <span class="mr-2" ng-if="st.image == ''">
+                                    <img src="public/dist/img/avatar5.png" width="45px" height="45px" 
+                                    alt="" class="rounded-circle">
+                                </span> -->
+                                {{ st.label }}</td>
+                            <!-- <td class="align-middle">{{ st.phone }}</td>
+                            <td class="align-middle">{{ st.blood_group }}</td>
+                            <td class="align-middle">{{ st.age }}</td>
+                            <td class="align-middle">{{st.address}}</td>
+                            <td class="align-middle">{{st.gender}}</td> -->
+                            <td class="align-middle">
+                                <!-- <button class="btn btn-xs btn-primary" ng-click="viewStaffModal(st)">
+                                    <i class="fa fa-eye"></i>
+                                </button> -->
+                                <button class="btn btn-xs btn-success" ng-click="updateStaffModal(st)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button ng-if="st.status == 1" class="btn btn-xs btn-danger"
+                                 ng-click="disableProduct(st.id, 0)">
+                                    Disable
+                                </button>
+                                <button ng-if="st.status == 0" class="btn btn-xs btn-info"
+                                 ng-click="disableProduct(st.id, 1)">
+                                    Active
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Staff Edit Modal Starts  -->
+<div class="modal fade"  id="modalStaffEdit">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Products</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="">
+                    <form name="editProductForm" novalidate enctype="multipart/form-data">
+                        <div class="card-body">
+                            <div class="row">
+                                <input type="hidden" ng-model="ng_editsid">
+                                <div class="col-lg-12 col-md-12 mx-auto col-sm-12">
+                                    <div class="form-group">
+                                        <p class="text-right
+                                        " > پروڈکٹ کا نام <span class="req">*</span> </p>
+
+                                        <input  dir="rtl" class="form-control" type="text" placeholder="پروڈکٹ کا نام شامل کریں۔"
+                                        name="editpname" ng-model="ng_editpname"  required>
+
+                                    </div>
+                                    <div ng-show="editProductForm.editsname.$dirty && editProductForm.editsname.$invalid">
+                                        <!-- <small class="text-danger" ng-show="editProductForm.editsname.$invalid">
+                                            ( Only characters are allowed )
+                                        </small> -->
+                                        <br>
+                                        <small class="text-danger" ng-show="editProductForm.editsname.$error.required">
+                                            Required
+                                        </small>
+                                    </div>
+                                </div>
+        
+                                <div class="col-lg-12 col-md-12 col-sm-12 mt-12">
+                                 
+                                        <button class="btn btn-block btn-info btn-md" 
+                                        ng-disabled="editProductsForm.$invalid " 
+                                        ng-click="updateStaff()">Update Product</button> 
+                                    
+                                </div>
+        
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- Staff Edit Modal Ends  -->
+
+<!-- Staff View Modal Starts  -->
+<div class="modal fade" id="modalProductsView">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">View products</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid p-3">
+                <div class="row">
+                    <div class="col-md-3 text-center" ng-if="view_simage !== ''">
+                        <img ng-src="{{view_simage}}" alt="" class=" rounded-circle view_image" width="150px" height="150px">
+                    </div>
+                    <div class="col-md-3 text-center" ng-if="view_simage == ''">
+                        <img src="public/dist/img/avatar5.png" alt="" class="rounded-circle view_image" width="150px" height="150px">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row py-2 bg-light">
+                            <div class="col-md-4">
+                                <h5>Name:</h5>
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{view_pname}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+<!-- Staff View Modal Ends  -->
+<script> 
+    $('.select2').select2();
+   
+    
+</script>
+    
+</script>
