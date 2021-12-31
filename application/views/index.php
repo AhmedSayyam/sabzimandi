@@ -41,9 +41,21 @@
    <link rel="stylesheet" href="<?php echo base_url();?>public/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
    <link rel="stylesheet" href="<?php echo base_url();?>public/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet"> 
    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css"> -->
 
 <style>
+  @font-face {
+  font-family: "myfont";
+  src: url("<?php echo base_url();?>public/fonts/NotoNastaliqUrdu-Regular.ttf") format("ttf");
+  }
+  body{
+    /* font-family: myfont; */
+    font-family: 'Noto Nastaliq Urdu', serif;
+  }
+
   .dimmer {
       display: none;
       background: #000;
