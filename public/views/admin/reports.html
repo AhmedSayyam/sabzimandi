@@ -29,25 +29,25 @@
             </div>
             
             <div class="card-body table-responsive col-md-12">
-                <table dir="rtl"  class="table table-sm  table-borderless table-hover"
+                <table dir="rtl"  class="table  table-bordered table-hover"
                 id="example1">
                 <caption>List of Account</caption>
                    <thead class="thead-light">
                        <tr class="">
-                        <th>Sr No.</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Total Amount</th>
-                        <th>Pay Amount</th>
-                        <th>Due Total Amount</th>
-                        <th>Action</th>
+                        <th class="urduName text-right">نمبرشمار</th>
+                        <th class="urduName text-right">نام</th>
+                        <th class="urduName text-right">پتہ</th>
+                        <th class="urduName text-right">فون نمبر</th>
+                        <th class="urduName text-right">کل رقم</th>
+                        <th class="urduName text-right">ادا شدہ رقم</th>
+                        <th class="urduName text-right">باقی رقم</th>
+                        <th class="text-right urduName">عمل</th>
                        </tr>
                    </thead>
                    <tbody>
                        <tr ng-repeat="member in Account_data">
-                        <td dir="rtl" class="align-middle">{{ $index+1 }}</td>
-                        <td dir="rtl" class="align-middle text-right">
+                        <td class="align-middle text-right">{{ $index+1 }}</td>
+                        <td class="align-middle text-right">
                             <span class="mr-2" ng-if="member.image !== ''">
                                 <img ng-src="{{member.image}}" width="45px" height="45px" 
                                 alt="" class="rounded-circle">
@@ -56,22 +56,22 @@
                                 <img src="public/dist/img/avatar5.png" width="45px" height="45px" 
                                 alt="" class="rounded-circle">
                             </span>
-                            <span class="mx-2">
+                            <span class="mx-2 urduName">
                                 {{ member.name }}
                             </span>
                             
                         </td>
-                        <td class="align-middle">{{ member.adress }}</td>
-                        <td class="align-middle">{{ member.phone }}</td>
-                        <td class="align-middle">{{member.total_amount}}</td>
-                        <td class="align-middle">{{member.pay_amount}}</td>
-                        <td class="align-middle">{{member.due_total_amount}}</td>
+                        <td class="align-middle urduName text-right">{{ member.adress }}</td>
+                        <td class="align-middle text-right">{{ member.phone }}</td>
+                        <td class="align-middle text-right">{{member.total_amount}}</td>
+                        <td class="align-middle text-right">{{member.pay_amount}}</td>
+                        <td class="align-middle text-right">{{member.due_total_amount}}</td>
                         <!-- <td class="align-middle">
                             <span></span>    {{member.instructor_name}}
                         </td> -->
-                           <td class="align-middle">
-                               <button class="btn btn-sm btn-danger" ng-click="collectFeeModal(member)">
-                                   <i class="far fa-plus-square mr-2"></i>Details
+                           <td class="align-middle text-center">
+                               <button class="btn btn-sm btn-success" ng-click="collectFeeModal(member)">
+                                   Details
                                 </button>
                            </td>
                        </tr>

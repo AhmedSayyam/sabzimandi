@@ -129,34 +129,40 @@
 
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card-body table-responsive col-md-12">
-                                <table dir="rtl" class="table table-sm  table-bordered table-hover" 
+                                <table dir="rtl" id="product_table" class="table  table-bordered table-hover" 
                                 >
                                 <!-- datatable="ng" dt-option="vm.dtOptions" -->
                                     <thead class="thead-light ">
                                         <tr class="">
-                                            <th>اکاونٹ نمبر</th>
-                                            <th class="text-center">  پروڈکٹ کا نام </th>
-                                            <th class="text-center">مقدار</th>
-                                            <th class="text-center"> رقم </th>
-                                            <th class="text-center">عمل</th>
+                                            <th class="urduName text-right">نمبرشمار</th>
+                                            <th class="text-right urduName">  پروڈکٹ کا نام </th>
+                                            <th class="text-center urduName">مقدار</th>
+                                            <th class="text-center urduName"> رقم </th>
+                                            <th class="text-center urduName">عمل</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="item in activeitems">
-                                            <td dir="rtl" class="align-middle text-center">{{ item.id }}</td>
-                                            <td dir="rtl" class="align-middle text-right">
+                                            <td dir="rtl" class="align-middle text-right">{{ item.id }}</td>
+                                            <td dir="rtl" class="align-middle text-right urduName">
                                                 {{ item.label }}
                                             </td>
                                             <td class="align-middle ">
-                                                <input type="text" class="form-control" placeholder="مقدار" ng-model="qty">
+                                                <input type="text" required class="form-control text-center" placeholder="مقدار" ng-model="qty">
                                             </td>
                                             <td class="align-middle">
-                                                <input type="text" class="form-control" placeholder="رقم" ng-model="price">
+                                                <input type="text" required class="form-control text-center "  placeholder="رقم" ng-model="price">
                                             </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-xs btn-success"
-                                                 ng-click="add_cart(item.id,item.label,qty,price)">
-                                                    <i class="fa fa-plus"></i>
+                                            <td class="align-middle text-center">
+                                                <button 
+                                                ng-class="{
+                                                    'btn-success': item.status==1,
+                                                    'btn-danger': item.status==0,
+                                                    'btn-warning': item.status==2
+                                                }" 
+                                                class="btn urduName"
+                                                 ng-click="add_cart(item.id,item.label,qty,price,item.status)">
+                                                 شامل کریں
                                                 </button>
                                             </td>
                                         </tr>

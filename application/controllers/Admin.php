@@ -1192,6 +1192,8 @@ $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
 // $fontname = TCPDF_FONTS::addTTFfont('TCPDF-main/urdufont.ttf', 'TrueTypeUnicode', '', 96);
 $fontname = TCPDF_FONTS::addTTFfont('TCPDF-main/ARIALUNI.ttf', 'TrueTypeUnicode', '', 20);
 $fontname = TCPDF_FONTS::addTTFfont('TCPDF-main/urdufont.ttf', 'TrueTypeUnicode', '', 32);
+$fontname = TCPDF_FONTS::addTTFfont('TCPDF-main/NotoNastaliqUrdu-Regular.ttf', 'TrueTypeUnicode', '', 32);
+
 // use the font
 
 
@@ -1243,14 +1245,15 @@ $date=date('Y-m-d');
 // $this->SetFont($font,'',10);
 // $pdf->SetFont('dejavusans', '', 12);
 $pdf->SetFont('arialuni', '', 15);
+// $pdf->SetFont('NotoNastaliqUrduRegular', 'BI', 20, '', 'false');
+$pdf->setFont($font_family='notonastaliqurdu',$font_variant='',$font_size=10);
 
 // add a page
 $pdf->AddPage();
 
 // create some HTML content
 $html = '
-
-<h1 style="text-align:center;">رانا عدنان اینڑ برادرز مارکہ</h1>
+<h1 style="text-align:center;" class="urduName">رانا عدنان اینڑ برادرز مارکہ</h1>
 
 <span style="text-align:center; margin:0; display:block;">&nbsp; &nbsp;<span>دکان نمبر</span><span>38/A</span><span>نیوسبزی منڑی صادق آباد</span></span>
 <p style="text-align:center; margin:0;"><span>رابطہ نمبر</span>:</p>
@@ -1275,7 +1278,7 @@ $tbl_html = "
 $i=1;
 foreach($customer_list  as $customer){
     $image=$customer['image'];
-    $tbl_html .= "<tr  style='border:1px solid #eeeeee;padding:4px;'>
+    $tbl_html .= "<tr  style='border:1px solid #eeeeee;padding:8px;'>
        <td>$i</td>
        <td>{$customer['id']}</td>
        <td>{$customer['name']}</td>
@@ -1304,7 +1307,7 @@ table tr th{
 }
 th,td{
     border: 1px solid #696969;text-align:center;height:15px;vertical-align: center;
-    font-size:12px;
+    font-size:12px;padding: 12px;
 }
 </style>	
 ";

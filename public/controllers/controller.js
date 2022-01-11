@@ -337,16 +337,45 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
         // Dropzone of add product page code ends 
    });
 
-    $scope.add_cart = function(id, label, qty, price){
-        $rootScope.product_array.push({
-            product_id: id,
-            label: label,
-            quantity: qty,
-            price: price
-        });
-        $rootScope.total = $rootScope.total + parseFloat(price);
-        console.log("Product Array = ", $rootScope.product_array);
-        console.log("Total = ", $rootScope.total);
+   $scope.dbl_check = false;
+
+    $scope.add_cart = function(id, label, qty, price, istatus){
+        if(!qty && !price){
+            notify('Please select quantity and price!', 'error');
+            return;
+        }
+        else{
+            if($rootScope.product_array.find(x => x.product_id==id)){
+                let abx = $rootScope.product_array.find(x => x.product_id==id);
+                // console.log("found", abx);
+                abx.quantity = qty;
+                $rootScope.total = $rootScope.total - abx.price;
+                abx.price = parseFloat(price);
+                $rootScope.total = $rootScope.total + abx.price;
+            }
+            else{
+                // console.log("not found");
+                $rootScope.product_array.push({
+                    product_id: id,
+                    label: label,
+                    quantity: qty,
+                    price: price
+                });
+                $rootScope.total = $rootScope.total + parseFloat(price);
+            }
+            
+            angular.forEach($scope.activeitems, function(key, value){
+                if(key.id == id){
+                    key.status = 0;
+                }
+            });
+
+            
+
+            // console.log("Product Array = ", $rootScope.product_array);
+            // console.log("Total = ", $rootScope.total);
+        }
+        
     }
 
     $scope.createSale = function(cost){
@@ -369,6 +398,9 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
                 console.log(response);
                 if(response.data.status == true){
                     notify(response.data.error, "success");
+                    $rootScope.product_array = [];
+                    $rootScope.total = 0;
+
                 }
                 else{
                     notify(response.data.error, "error");
@@ -393,6 +425,8 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
             console.log(response);
             if(response.data.status == true){
                 notify(response.data.error, "success");
+                $rootScope.product_array = [];
+                $rootScope.total = 0;
             }
             else{
                 notify(response.data.error, "error");
@@ -403,9 +437,38 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
     }
 });
 
+app.controller('sale_report_ctrl', function($scope, $http, $route){
+    $scope.getsaleReport = function(){
+        $http.get('http://localhost/sabzimandi/Admin/today_list_sale', $.param({}), {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        }).then(function (response) {
+            if (response.data.status) {
+                $scope.list = response.data.data;
+                console.log("LIST = ", $scope.list);
+                // angular.forEach($scope.list, function(key, value){
+                //     // console.log("a", key);
+                //     $scope.totalToday = $scope.totalToday + parseFloat(key.total_amount);
+                //     $scope.totalFreshToday = $scope.totalFreshToday + parseFloat(key.fresh_amount);
+                //     console.log("Grand Total = ",$scope.totalToday);
+                //     console.log("Grand Fresh = ",$scope.totalFreshToday);
+                // });
+                // angular.array.forEach(element => {
+                //     console.log("Grand Total = ",element.total_amount);
+                // });
+            }
+        });
+    }
+    $scope.getsaleReport();
+});
+
 app.controller('package_ctrl', function($scope, $http, $route){
     // console.log("package Controller");
     $("#createCategorySection").hide();
+    $scope.totalToday = 0;
+    $scope.totalFreshToday = 0;
+    
     
     $scope.getPackage = function(){
         $http.get('http://localhost/sabzimandi/Admin/today_list', $.param({}), {
@@ -415,6 +478,16 @@ app.controller('package_ctrl', function($scope, $http, $route){
         }).then(function (response) {
             if (response.data.status) {
                 $scope.list = response.data.data;
+                angular.forEach($scope.list, function(key, value){
+                    // console.log("a", key);
+                    $scope.totalToday = $scope.totalToday + parseFloat(key.total_amount);
+                    $scope.totalFreshToday = $scope.totalFreshToday + parseFloat(key.fresh_amount);
+                    console.log("Grand Total = ",$scope.totalToday);
+                    console.log("Grand Fresh = ",$scope.totalFreshToday);
+                });
+                // angular.array.forEach(element => {
+                //     console.log("Grand Total = ",element.total_amount);
+                // });
             }
         });
     }
@@ -529,6 +602,18 @@ app.controller('customers_ctrl', function($scope, $http, $route){
     $("#memberListingSection").hide();
 
     // console.log("Members Controller");
+
+    $scope.generatePdf = function() {
+        // create the window before the callback
+        var win = window.open('', '_blank');
+        $http.get('/http://localhost/sabzimandi/Admin/customer').then(function(response) {
+          // pass the "win" argument
+        //   pdfMake.createPdf(docDefinition).open({}, win);
+          pdfMake.createPdf(docDefinition).open({}, window);
+
+        });
+      };
+      
     $("#createMemberSection").hide();
 
     $scope.myprint=function(){
