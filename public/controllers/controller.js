@@ -289,7 +289,7 @@ app.controller('products_ctrl', function($scope, $http, $route){
 
 });
 
-app.controller('pos_ctrl', function($scope, $http, $rootScope){
+app.controller('pos_ctrl', function($scope, $http, $rootScope, $route){
     $scope.getMembers = function(){
         $http.get('http://localhost/sabzimandi/Admin/customer', $.param({}), {
             headers: {
@@ -380,7 +380,6 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
 
     $scope.createSale = function(cost){
         if(cost==null){
-            console.log('customer id null');
                 var postData = $.param({
                 name: $scope.ng_cname,
                 phone: $scope.ng_cphone,
@@ -395,11 +394,11 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
             }).then(function(response){
-                console.log(response);
                 if(response.data.status == true){
                     notify(response.data.error, "success");
                     $rootScope.product_array = [];
                     $rootScope.total = 0;
+                    $route.reload();
 
                 }
                 else{
@@ -408,8 +407,6 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
             });
         }
         else{
-            console.log('id=',cost);
-
               var postData = $.param({
               c_id:cost,
               products: $rootScope.product_array,
@@ -422,11 +419,11 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         }).then(function(response){
-            console.log(response);
             if(response.data.status == true){
                 notify(response.data.error, "success");
                 $rootScope.product_array = [];
                 $rootScope.total = 0;
+                $route.reload();
             }
             else{
                 notify(response.data.error, "error");
@@ -437,7 +434,7 @@ app.controller('pos_ctrl', function($scope, $http, $rootScope){
     }
 });
 
-app.controller('sale_report_ctrl', function($scope, $http, $route){
+app.controller('sale_report_ctrl', function($scope, $http){
     $scope.getsaleReport = function(){
         $http.get('http://localhost/sabzimandi/Admin/today_list_sale', $.param({}), {
             headers: {
