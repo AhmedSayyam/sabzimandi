@@ -18,9 +18,13 @@ app.config(function($routeProvider) {
             templateUrl: "public/views/admin/pos.html",
             controller: "pos_ctrl"  
         })
-        .when("/package", {
+        .when("/account-report", {
             templateUrl: "public/views/admin/package.html",
             controller: "package_ctrl"
+        })
+        .when("/sale-report", {
+            templateUrl: "public/views/admin/sale_report.html",
+            controller: "sale_report_ctrl"
         })
         .when("/reports", {
             templateUrl: "public/views/admin/reports.html",

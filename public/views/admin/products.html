@@ -89,33 +89,15 @@
                  <caption>List of Staff</caption>
                     <thead class="thead-light">
                         <tr class="">
-                            <th>Sr No.</th>
-                            <th>Name</th>
-                            <th>Action</th>
+                            <th class="text-right urduName">عمل</th>
+                            <th class="urduName text-right">نام</th>
+                            <th class="urduName text-right">نمبرشمار</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="st in items">
-                            <td class="align-middle">{{ $index+1 }}</td>
-                            <td class="align-middle">
-                                <!-- <span class="mr-2" ng-if="st.image !== ''">
-                                    <img ng-src="{{st.image}}" width="45px" height="45px" 
-                                    alt="" class="rounded-circle">
-                                </span> -->
-                                <!-- <span class="mr-2" ng-if="st.image == ''">
-                                    <img src="public/dist/img/avatar5.png" width="45px" height="45px" 
-                                    alt="" class="rounded-circle">
-                                </span> -->
-                                {{ st.label }}</td>
-                            <!-- <td class="align-middle">{{ st.phone }}</td>
-                            <td class="align-middle">{{ st.blood_group }}</td>
-                            <td class="align-middle">{{ st.age }}</td>
-                            <td class="align-middle">{{st.address}}</td>
-                            <td class="align-middle">{{st.gender}}</td> -->
-                            <td class="align-middle">
-                                <!-- <button class="btn btn-xs btn-primary" ng-click="viewStaffModal(st)">
-                                    <i class="fa fa-eye"></i>
-                                </button> -->
+                            <td class="align-middle text-center">
                                 <button class="btn btn-xs btn-success" ng-click="updateStaffModal(st)">
                                     <i class="fa fa-edit"></i>
                                 </button>
@@ -128,6 +110,12 @@
                                     Active
                                 </button>
                             </td>
+                            <td class="align-middle urduName text-right">
+                                {{ st.label }}
+                            </td>
+                            <td class="align-middle text-right">{{ $index+1 }}</td>
+                            
+                            
                         </tr>
                     </tbody>
                 </table>

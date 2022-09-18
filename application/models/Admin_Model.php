@@ -717,65 +717,70 @@ class Admin_Model extends CI_Model{
 
 
       // slae products   listing today
-    function today_list_sale($id=null){
-        
-        $query = $this->db->query("select tblsale_product.*,tblproducts.label,tblcustomer.name ,tblcustomer.adress
-         From
-         tblsale_product
-         left join tblcustomer ON tblcustomer.id=tblsale_product.c_id
-          join tblproducts ON tblproducts.id=tblsale_product.product_id
-         where DATE(tblsale_product.created_on) = CURRENT_DATE");
 
-         if( $query->num_rows()>0){
-            return  $query->result_array();
+      // slae products   listing today
+    function today_list_sale($id=null){
+
+        $saleList = $this->db->query("select tblsale.* ,tblcustomer.name ,tblcustomer.adress
+        From
+        tblsale
+        left join tblcustomer ON tblcustomer.id=tblsale.c_id
+        where DATE(tblsale.created_on) = CURRENT_DATE");
+        $list = array();
+        if($saleList->num_rows()>0){
+          $sales=  $saleList->result_array();
+          foreach($sales as $data){
+            $query = $this->db->query("select tblsale_product.*,tblproducts.label
+            From
+            tblsale_product
+             join tblproducts ON tblproducts.id=tblsale_product.product_id
+            where (tblsale_product.s_id={$data['id']} AND tblsale_product.c_id={$data['c_id']}) AND  DATE(tblsale_product.created_on) = CURRENT_DATE")->result_array();
+            foreach($query as $sale_list){
+                array_push(
+                    $list,
+                    array(
+                        'new_amount'=> null,
+                        'id' => $sale_list['id'],
+                        'c_id' => $sale_list['c_id'],
+                        's_id' => $data['id'],
+                        'name' => $data['name'],
+                        'adress' => $data['adress'],
+                        'label' => $sale_list['label'],
+                        'quantity' => $sale_list['quantity'],
+                        'price' => $sale_list['price'],
+                        'created_on' => $sale_list['created_on'],
+                    )
+                    );
+            }
+            // array_push(
+            //     $list,
+            //     array(
+            //         'new_amount'=>$data['new_amount']
+                   
+            //     )
+            //     );
+          }
+          return $list;
+
         }else{
             return false;
         }
-
-    //     $customer =  $this->db->get('tblcustomer')->result_array();
-    //     $list = array();
-
-    //   foreach ($customer as $data) {
-         
-    //       $query = $this->db->query("select tblsale.*   From
-    //      tblsale
-    //      where DATE(tblsale.created_on) = CURRENT_DATE AND tblsale.c_id={$data['id']}");
-
-    //       if ($query->num_rows() > 0) {
-    //           $customer_data = $query->result_array();
-
-
-    //               array_push(
-    //                   $list,
-    //                   array(
-    //                       'image' => $data['image'],
-    //                       'id'    => $data['id'],
-    //                       'name'  => $data['name'],
-    //                       'adress' => $data['adress'],
-    //                       'rummening_amount' => $data['amount']-$customer_data[0]['new_amount'],
-    //                       'fresh_amount' => $customer_data[0]['new_amount'],
-    //                       'total_amount' => $data['amount'],
-    //                   )
-    //                   );
-              
-    //       }else{
-
-    //           array_push(
-    //               $list,
-    //               array(
-    //                   'image' => $data['image'],
-    //                   'id' => $data['id'],
-    //                   'name' => $data['name'],
-    //                   'adress' => $data['adress'],
-    //                   'rummening_amount' => $data['amount'],
-    //                   'fresh_amount' => 0,
-    //                   'total_amount' => $data['amount'],
-    //               )
-    //               );
-    //       }
-    //   }
-    //   return $list;
       }
+    // function today_list_sale($id=null){
+        
+    //     $query = $this->db->query("select tblsale_product.*,tblproducts.label,tblcustomer.name ,tblcustomer.adress
+    //      From
+    //      tblsale_product
+    //      left join tblcustomer ON tblcustomer.id=tblsale_product.c_id
+    //       join tblproducts ON tblproducts.id=tblsale_product.product_id
+    //      where DATE(tblsale_product.created_on) = CURRENT_DATE");
+
+    //      if( $query->num_rows()>0){
+    //         return  $query->result_array();
+    //     }else{
+    //         return false;
+    //     }
+    // }
 
       #========================================== END =======================================================
 

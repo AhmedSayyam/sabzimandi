@@ -51,7 +51,7 @@
   font-family: "myfont";
   src: url("<?php echo base_url();?>public/fonts/NotoNastaliqUrdu-Regular.ttf") format("ttf");
   }
-  body{
+  .urduName{
     /* font-family: myfont; */
     font-family: 'Noto Nastaliq Urdu', serif;
   }
@@ -290,11 +290,34 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link">
+              <i class="nav-icon fab fa-digital-ocean"></i>
+              <p>
+                Today Reporting
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#!account-report" class="nav-link">
+                  <i class="fas fa-angle-right nav-icon"></i>
+                  <p>Accounts Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#!sale-report" class="nav-link">
+                  <i class="fas fa-angle-right nav-icon"></i>
+                  <p>Sale Report </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- <li class="nav-item">
             <a href="#!package" class="nav-link">
               <i class="nav-icon fab fa-codiepie"></i>
               <p>Today print List</p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="#!pos" class="nav-link">
               <i class="nav-icon fab fa-codiepie"></i>
@@ -307,13 +330,37 @@
               <p>Add product</p>
             </a>
           </li>
-          
+
           <li class="nav-item">
+            <a class="nav-link">
+              <i class="nav-icon fa fa-money-bill-wave"></i>
+              <p>
+                Reports
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#!reports" class="nav-link">
+                  <i class="fas fa-angle-right nav-icon"></i>
+                  <p>Accounts Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="fas fa-angle-right nav-icon"></i>
+                  <p>Sale Report </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
+          <!-- <li class="nav-item">
             <a href="#!reports" class="nav-link">
               <i class="nav-icon fa fa-money-bill-wave"></i>
               <p>Reports</p>
             </a>
-          </li>
+          </li> -->
           
           
         </ul>
@@ -389,13 +436,17 @@
 <!-- Toastr -->
 <script src="<?php echo base_url();?>public/plugins/toastr/toastr.min.js"></script>
 
-
- <!-- Angular 1.8.0 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.4/pdfmake.min.js" integrity="sha512-vCaf5rysVLu1/zVMefJew+IjqlQibggltPWqeo96XsdyJ4ihR3eEDV1oU60afiRXTGf8DqKUjLs2Q99HCbnjAw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.4/vfs_fonts.min.js" integrity="sha512-BDZ+kFMtxV2ljEa7OWUu0wuay/PAsJ2yeRsBegaSgdUhqIno33xmD9v3m+a2M3Bdn5xbtJtsJ9sSULmNBjCgYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Angular 1.8.0 -->
  <script src="<?php echo base_url();?>public/plugins/angular-1.8.0/angular.min.js"></script>
  <script src="<?php echo base_url();?>public/plugins/angular-1.8.0/angular-route.min.js"></script>
 
- <script src="<?php echo base_url();?>public/dist/js/pdfmake.js"></script>
- <script src="<?php echo base_url();?>public/dist/js/pdffont.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.33/vfs_fonts.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+ <!-- <script src="<?php echo base_url();?>public/dist/js/pdfmake.js"></script>
+ <script src="<?php echo base_url();?>public/dist/js/pdffont.js"></script> -->
 
 
  <!-- <script data-require="angular-translate@*" data-semver="2.5.0" src="https://cdn.rawgit.com/angular-translate/bower-angular-translate/2.5.0/angular-translate.js"></script> -->

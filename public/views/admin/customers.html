@@ -18,6 +18,9 @@
         box-sizing: border-box;
         border: 4px solid rgb(162, 166, 167) !important
     }
+    /* .dataTables_wrapper {
+        direction: rtl;
+    } */
 </style>
 <section class="content ">
     <div class="container-fluid py-4" id="createMemberSection">
@@ -171,22 +174,22 @@
             </div>
             
             <div class="card-body table-responsive col-md-12">
-                <table id="example1" ng-if="members_data.length" dir="rtl" class="table table-sm  table-borderless table-hover" >
+                <table id="example1" ng-if="members_data.length" dir="rtl" class="table  table-bordered table-hover" >
                  <!-- <caption>صارفین کی فہرست</caption> -->
                     <thead class="thead-light ">
                         <tr class="">
-                            <th dir="rtl" style="font-family: myfont;">اکاونٹ نمبر</th>
-                            <th dir="rtl" class="text-center"> نام</th>
-                            <th dir="rtl" class="text-center">فون نمبر</th>
-                            <th dir="rtl" class="text-center">پتہ</th>
-                            <th dir="rtl" class="text-center">کل رقم </th>
-                            <th dir="rtl" class="text-center">عمل</th>
+                            <th class="text-right urduName">اکاونٹ نمبر</th>
+                            <th class="text-right urduName"> نام</th>
+                            <th class="text-right urduName">فون نمبر</th>
+                            <th class="text-right urduName">پتہ</th>
+                            <th class="text-right urduName">کل رقم </th>
+                            <th class="text-right urduName action spcol">عمل</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="member in members_data">
-                            <td dir="rtl" class="align-middle text-center">{{ member.id }}</td>
-                            <td dir="rtl" class="align-middle text-right">
+                            <td class="align-middle text-right">{{ member.id }}</td>
+                            <td class="align-middle text-right">
                                 <span class="mr-2" ng-if="member.image !== ''">
                                     <img ng-src="{{member.image}}" width="45px" height="45px" 
                                     alt="" class="rounded-circle">
@@ -195,17 +198,17 @@
                                     <img src="public/dist/img/avatar5.png" width="45px" height="45px" 
                                     alt="" class="rounded-circle">
                                 </span>
-                                <span class="mx-2">
+                                <span class="mx-2 urduName">
                                     {{ member.name }}
                                 </span>
 
                             </td>
-                            <td class="align-middle ">{{ member.phone }}</td>
-                            <td class="align-middle">{{member.adress}}</td>
-                            <td class="align-middle">{{member.amount}}</td>
-                            <td class="align-middle">
-                                <button class="btn btn-xs btn-success" ng-click="AddcustomerModal(member)">Add
-                                </button>
+                            <td class="align-middle text-right">{{ member.phone }}</td>
+                            <td class="align-middle urduName text-right">{{member.adress}}</td>
+                            <td class="align-middle text-right">{{member.amount}}</td>
+                            <td class="align-middle text-center spcol">
+                                <!-- <button class="btn btn-xs btn-success" ng-click="AddcustomerModal(member)">Add
+                                </button> -->
                                 <button class="btn btn-xs btn-primary" ng-click="viewMemberModal(member)">
                                     <i class="fa fa-eye"></i>
                                 </button>
@@ -476,37 +479,39 @@
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="card-body table-responsive col-md-12">
-                    <table class="table table-sm  table-borderless table-hover" >
+                    <table class="table table-bordered table-hover" >
                         <!-- datatable="ng" dt-option="vm.dtOptions" -->
-                     <caption>List of Sale</caption>
                         <thead class="thead-light">
                             <tr class="">
-                                <th>تاریخ</th>
-                                <th class="">  پروڈکٹ کا نام </th>
-                                <th class="">مقدار</th>
-                                <th class=""> رقم </th>
-                              
-
+                                <th class="urduName text-right">تاریخ</th>
+                                <th class="urduName text-right"> رقم </th>
+                                <th class="urduName text-right">مقدار</th>
+                                <th class="urduName text-right">  پروڈکٹ کا نام </th>
+                               
+                                
+                                
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="sale in sale_detail">
-                                <td class="align-middle">{{sale.created_on}}</td>
-                                <td class="align-middle ">{{ sale.label }}</td>
-                                <td class="align-middle">
+                                <td class="align-middle urduName text-right">{{sale.created_on}}</td>
+                                <td class="align-middle text-right">{{sale.price}}</td>
+                                <td class="align-middle text-right">
                                     <span ng-if="sale.quantity==''">0</span>
                                     {{ sale.quantity }}
                                 </td>
+                                <td class="align-middle urduName text-right">{{ sale.label }}</td>
                                 
-                                <td class="align-middle">{{sale.price}}</td>
+                                
                                 
                             </tr>
                             <tr class="bg-info text-white">
-                                <td colspan="2"></td>
-                                <td>
-                                  Total Amount
+                                <td></td> 
+                                <td class="text-right">{{saletotal}}</td>
+                                <td class="urduName">
+                                    کل ادائیگی
                                 </td>
-                                <td>{{saletotal}}</td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -663,8 +668,64 @@
     function abc(){
         setTimeout(function(){
             $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,"ordering": false,
-            "buttons": ["print"]
+            "responsive": true, "lengthChange": false, "autoWidth": false,"ordering": false,"info":false,
+            "columnDefs": [{
+                "visible": true,
+                "targets": -1
+            }],
+            // "language": {
+            // "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+            // },
+            buttons: [
+            {
+                extend: 'print',
+                title: '',
+                exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4 ]
+                },
+                orientation: 'portrait',
+                pageSize: 'A4',
+                footer: false,
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                            '<div>',
+                                '<h1 class="urduName text-center">رانا عدنان اینڑ برادرز مارکہ </h1>',
+                                '<h5 class="urduName text-center" style="margin-top:20px;"><span>38/A</span><span> &nbsp; &nbsp; نیوسبزی منڑی صادق آباد</span><span>&nbsp; &nbsp; دکان نمبر</span></h5>',
+                                '<h4 class="text-dark" style="text-align:center;">0302-6819127,0332-7303544 <span class="urduName">راناعدنان</span> </h4>',
+                                '<h4 class="text-dark" style="text-align:center;">0300-9860631,0346-7687836 <span class="urduName">راناعبدالرؤف</span> </h4>',
+                                '<h6 class="urduName text-right">گاہک کی تفصیلات</h6>',
+                            '</div>',
+                        );
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit' )
+                        .css('direction', 'rtl')
+                        .css('font-family', 'Noto Nastaliq Urdu');
+
+                    // $(win.document.body).find('table thead tr')
+                    //     .append("<th>وصول شدہ</th>");
+                    // $(win.document.body).find('table tbody tr')
+                    //     .append("<td></td>");
+                                
+                }
+            }
+        ]
+            // "buttons": [
+            //     {
+            //         extend: 'print',
+            //         text: '<i class="fas fa-print"></i>',
+            //         titleAttr: 'Imprimir',
+            //         className: 'btn btn-info',
+            //         columns: ':not(.action)',
+            //         orientation: 'landscape',
+                    
+            //     }
+            // ]
+            // "buttons": ["print"]
+            // <img src="public/dist/img/avatar.png" alt="">
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         }, 2000);
     }
@@ -691,4 +752,3 @@
   });
 
 </script>
-

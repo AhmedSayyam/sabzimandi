@@ -17,56 +17,37 @@
     }
 </style>
 <section class="content ">
-
+    
     <div class="container-fluid py-4" id="categoryListingSection">
         <div class="card shadow">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-6">
-                        <h4 class="m-0">Today Account Report</h4>
+                        <h4 class="m-0">Today Sale Report</h4>
                     </div>
                 </div>
             </div>
             <div class="card-body table-responsive col-md-12">
-                <table dir="rtl" class="table table-bordered table-hover" 
+                <table dir="rtl" class="table table-sm table-bordered" 
                 id="example1">
                 <!-- <caption>List of Customer</caption> -->
                     <thead class="thead-light">
                         <tr>
                             <th class="text-right urduName">اکاونٹ نمبر</th>
                             <th class="text-right urduName">صارف</th>
-                            <th class="text-right urduName">پتہ</th>
-                            <th class="text-right urduName">بقایا رقم</th>
-                            <th class="text-right urduName">تازہ مال رقم</th>
-                            <th class="text-right urduName">کل بقایا</th>
+                            <th class="text-right urduName">پروڈکٹ کا نام</th>
+                            <th class="text-right urduName">مقدار</th>
+                            <th class="text-right urduName">رقم</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="customer_list in list">
-                            <!-- <td class="align-middle">{{ $index+1 }}</td> -->
-                            <td class="align-middle text-right">{{ customer_list.id }}</td>
+                        <tr  ng-repeat="customer_list in list" >
+                            <td class="align-middle text-right">{{ customer_list.c_id }}</td>
                             <td class="align-middle text-right urduName">{{ customer_list.name }}</td>
-                            <td class="align-middle text-right urduName">{{ customer_list.adress }}</td>
-                            <td class="align-middle text-right">{{customer_list.rummening_amount}}</td>
-                            <td class="align-middle text-right">{{customer_list.fresh_amount}}</td>
-                            <td class="align-middle text-right">{{customer_list.total_amount}}</td>
-
-                            <!-- <td class="align-middle">
-                                <button class="btn btn-xs btn-success" ng-click="updatePackageModal(package)">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button class="btn btn-xs btn-danger" ng-click="delPackage(package.package_id)">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                
-                            </td> -->
+                            <td class="align-middle text-right urduName">{{ customer_list.label }}</td>
+                            <td class="align-middle text-right">{{customer_list.quantity}}</td>
+                            <td class="align-middle text-right">{{customer_list.price}}</td>
                         </tr>
-                        <!-- <tr>
-                            <td colspan="4"></td>
-                            <td ng-cloak>Fresh = {{totalFreshToday}}</td>
-                            <td ng-cloak>Total = {{totalToday}}</td>
-                            
-                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -76,7 +57,6 @@
 
 <script> 
     $('.select2').select2();
-    
     function abc(){
         setTimeout(function(){
             $("#example1").DataTable({
@@ -117,10 +97,10 @@
                         .css('direction', 'rtl')
                         .css('font-family', 'Noto Nastaliq Urdu');
 
-                    $(win.document.body).find('table thead tr')
-                        .append("<th>وصول شدہ</th>");
-                    $(win.document.body).find('table tbody tr')
-                        .append("<td></td>");
+                    // $(win.document.body).find('table thead tr')
+                    //     .append("<th>وصول شدہ</th>");
+                    // $(win.document.body).find('table tbody tr')
+                    //     .append("<td></td>");
                                 
                 }
             }
